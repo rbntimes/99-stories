@@ -5,12 +5,10 @@ const Paragraph = styled.p`
   font-size: 1rem;
 `;
 
-function P({
+export default function({
   children,
 }) {
   return (
     <Paragraph>{children}</Paragraph>
   )
 }
-
-export default P;

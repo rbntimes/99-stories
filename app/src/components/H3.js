@@ -1,18 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Heading = styled.h3`
+const H3 = styled.h3`
   font-size: 1.25rem;
   color: ${(props) => props.color};
 `;
 
-function H3({
+export default function({
   children,
   color = 'white',
 }) {
   return (
-    <Heading color={color}>{children}</Heading>
+    <H3 color={color}>{children}</H3>
   )
 }
-
-export default H3;

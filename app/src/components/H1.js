@@ -1,19 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Heading = styled.h1`
+const H1 = styled.h1`
   font-size: 2.375rem;
   line-height: 2.375rem;
   color: #003082;
   font-weight: 100;
 `;
 
-function H1({
+export default function({
   children,
 }) {
   return (
-    <Heading>{children}</Heading>
+    <H1>{children}</H1>
   )
 }
-
-export default H1;
