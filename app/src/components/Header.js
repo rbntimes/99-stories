@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import NsLogo from './../components/NsLogo';
 import H3 from './../components/H3';
+import { Link } from 'react-router-dom';
 
 const Header = styled.header`
   display: flex;
@@ -16,7 +17,7 @@ const Header = styled.header`
 export default function() {
   return (
     <Header>
-      <NsLogo color="#fff" />
+      <Link to="/"><NsLogo color="#fff" /></Link>
       <H3 color="white">
         x nurks
       </H3>
