@@ -8,7 +8,7 @@ const H3 = styled.h3`
 
 export default function({
   children,
-  color = 'white',
+  color = 'rgba(0,48,130,.8)',
 }) {
   return (
     <H3 color={color}>{children}</H3>
