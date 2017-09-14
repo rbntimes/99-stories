@@ -1,27 +1,24 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import slugify from 'slugify';
+import ListItem from './../components/ListItem';
 
-import styled from 'styled-components';
+import { articles } from './../constants';
 
-import P from './../components/P';
-import H3 from './../components/H3';
-
-import { copy } from './../constants';
-
-const Article = styled.article`
-`;
-
-class App extends Component {
-  render() {
-    console.log(copy)
-    return (
-      <Article>
-        <H3>{copy.title}</H3>
-        <P>{copy.body}</P>
-       <Link to="/">terug</Link>
-       </Article>
-    );
-  }
+export default function() {
+  const niveau = Math.round(window.location.href.split('/').pop())
+  return (
+    <main>
+      {articles.filter((article) => {
+        if (niveau) {
+          return article.niveau === niveau
+        }
+        return article;
+      }).map(article =>
+        <ListItem
+          key={slugify(article.title)}
+          niveau={niveau}
+          article={article} />
+      )}
+    </main>
+  );
 }
-
-export default App;
