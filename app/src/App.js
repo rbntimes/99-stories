@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
-import { Switch, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Body from './pages';
 
-import Setup from './pages/setup';
-import Main from './pages/main';
-console.log(Main)
+const Container = styled.div`
+  padding: .4375rem;
+  height: 90vh;
+  font-family: 'Open Sans', sans-serif;
+`;
+
 class App extends Component {
   render() {
     return (
-      <Switch>
-        <Route exact path='/' component={Setup} />
-        <Route path='/main' component={Main} />
-      </Switch>
+      <Container>
+        <Header />
+        <Body />
+      </Container>
     );
   }
 }
