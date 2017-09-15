@@ -17,7 +17,7 @@ const Header = styled.header`
 export default function() {
   return (
     <Header>
-      <NsLogo color="#fff" />
+	  <Link to="/"><NsLogo color="#fff" /></Link>
       <Link to="/register">Registreren</Link>/
       <Link to="/login">Inloggen</Link>
       <H3 color="white">
