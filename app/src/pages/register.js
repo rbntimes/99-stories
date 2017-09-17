@@ -7,13 +7,9 @@ import P from './../components/P';
 import H3 from './../components/H3';
 import Field from './../components/Field';
 
-const Form = styled.form`
-  border: 1px solid red;
-`;
+const Form = styled.form`border: 1px solid red;`;
 
-const Input = styled.input`
-
-`;
+const Input = styled.input``;
 
 class App extends Component {
   render() {
@@ -33,8 +29,8 @@ class App extends Component {
         <Field label="Herhaal wachtwoord:">
           <Input type="password" />
         </Field>
-       <Link to="/">terug</Link>
-     </Form>
+        <Link to="/">terug</Link>
+      </Form>
     );
   }
 }

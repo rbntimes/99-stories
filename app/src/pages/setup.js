@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux'
+import { setLevel } from './../actions'
 import getOr from 'lodash/fp/getOr';
 import { Link } from 'react-router-dom';
 
@@ -10,39 +12,43 @@ import Slider from './../components/Slider';
 
 import constants from './../constants';
 
-class App extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      grade: 10,
-    }
-    this.handleChange = this.handleChange.bind(this);
-  }
+const Setup = ({onChange, niveau = 1}) => {
+  return (
+    <main>
+      <H1>Hoe lees jij graag?</H1>
+      <P>
+        {getOr('Geen tekst gevonden', [niveau, 'text'], constants)}
+      </P>
+      <Slider
+        onChange={(e) => onChange(e.target.value)}
+        value={niveau}
+       />
+       <Button>
+         <Link to={`/articles/${niveau}`}>Ik lees graag {getOr('Geen tekst gevonden', [niveau, 'name'], constants)}</Link>
+       </Button>
+     </main>
+  );
+}
 
-  handleChange(event) {
-    this.setState({
-      grade: event.target.value,
-    });
-  }
-
-  render() {
-    return (
-      <main>
-        <H1>Hoe lees jij graag?</H1>
-        <P>
-          {getOr('Geen tekst gevonden', [[Math.ceil(this.state.grade / 10)], 'text'], constants)}
-        </P>
-        <Slider
-          onChange={this.handleChange}
-          value={this.state.grade}
-         />
-         <Button>
-           <Link to={`/articles/${Math.ceil(this.state.grade / 10)}`}>Ik lees graag {getOr('Geen tekst gevonden', [[Math.ceil(this.state.grade / 10)], 'name'], constants)}</Link>
-         </Button>
-       </main>
-    );
+const mapStateToProps = (state, ownProps) => {
+  return {
+    niveau: state.stories.niveau
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  console.log(ownProps, 'ehfaejhu')
+  return {
+    onChange: (val) => {
+      dispatch(setLevel(val))
+    }
+  }
+}
+
+const SetupContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Setup)
+
+export default SetupContainer;
