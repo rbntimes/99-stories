@@ -7,22 +7,20 @@ import H3 from './../components/H3';
 import { Link } from 'react-router-dom';
 
 const Article = styled.article`
-height: 13rem;
-overflow: hidden;
+  height: 13rem;
+  overflow: hidden;
 `;
 
-export default function({article, niveau}) {
+export default function({ article, niveau, onClick }) {
   return (
     <Article>
-      <Link to={`${niveau}/${slugify(article.title, {lower: true})}`}>
-        <H3>
+      <H3 onClick={onClick(slugify(article.title, { lower: true }))}>
+        <Link to={`${niveau}/${slugify(article.title, { lower: true })}`}>
           {article.title}
-        </H3>
-      </Link>
-      <p dangerouslySetInnerHTML={{__html: nl2br(article.body)}}/>
-      <Link to="/">
-        terug
-      </Link>
+        </Link>
+      </H3>
+      <p dangerouslySetInnerHTML={{ __html: nl2br(article.body) }} />
+      <Link to="/">terug</Link>
     </Article>
-  )
+  );
 }

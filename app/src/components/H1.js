@@ -8,10 +8,7 @@ const H1 = styled.h1`
   font-weight: 100;
 `;
 
-export default function({
-  children,
-}) {
-  return (
-    <H1>{children}</H1>
-  )
-}
+export default ({ children }) =>
+  <H1>
+    {children}
+  </H1>;

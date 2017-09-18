@@ -7,14 +7,8 @@ const Label = styled.label`
   flex-direction: column;
 `;
 
-export default function ({
-  label,
-  children,
-}) {
-  return (
-    <Label>
-      {label}
-      {children}
-    </Label>
-  )
-}
+export default ({ label, children }) =>
+  <Label>
+    {label}
+    {children}
+  </Label>;

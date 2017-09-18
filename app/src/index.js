@@ -11,14 +11,7 @@ import Main from './pages/main';
 import Register from './pages/register';
 import Login from './pages/login';
 import Article from './pages/article';
-import styled from 'styled-components';
 import Header from './components/Header';
-import Body from './pages';
-const Container = styled.div`
-  padding: .4375rem;
-  height: 90vh;
-  font-family: 'Open Sans', sans-serif;
-`;
 
 let store = createStore(
   storiesApp,
