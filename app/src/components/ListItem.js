@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import nl2br from 'nl2br';
-import slugify from 'slugify';
 
 import H3 from './../components/H3';
 import { Link } from 'react-router-dom';
@@ -13,12 +12,12 @@ const Article = styled.article`
 
 export default function({ article, niveau, onClick }) {
   return (
-    <Article>
-      <H3 onClick={onClick(slugify(article.title, { lower: true }))}>
-        <Link to={`${niveau}/${slugify(article.title, { lower: true })}`}>
+    <Article onClick={() => onClick(article.slug)}>
+      <Link to={`${niveau}/${article.slug}`}>
+        <H3>
           {article.title}
-        </Link>
-      </H3>
+        </H3>
+      </Link>
       <p dangerouslySetInnerHTML={{ __html: nl2br(article.body) }} />
       <Link to="/">terug</Link>
     </Article>

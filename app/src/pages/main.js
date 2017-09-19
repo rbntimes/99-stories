@@ -1,30 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import slugify from 'slugify';
 import ListItem from './../components/ListItem';
 
 import { setCurrent } from './../actions';
 
 import { articles } from './../constants';
 
-const Main = ({ niveau, onClick }) => {
+const Main = ({ articles, niveau, onClick }) => {
   return (
     <main>
-      {articles
-        .filter(article => {
-          if (niveau) {
-            return article.niveau === niveau;
-          }
-          return article;
-        })
-        .map(article =>
-          <ListItem
-            onClick={onClick}
-            key={slugify(article.title)}
-            niveau={niveau}
-            article={article}
-          />
-        )}
+      {articles.map(article =>
+        <ListItem
+          niveau={Math.ceil(niveau)}
+          onClick={slug => onClick(slug)}
+          key={article.slug}
+          article={article}
+        />
+      )}
     </main>
   );
 };
@@ -32,13 +24,19 @@ const Main = ({ niveau, onClick }) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     niveau: state.stories.niveau,
+    articles: articles.filter(article => {
+      if (Math.ceil(state.stories.niveau)) {
+        return article.niveau === Math.ceil(state.stories.niveau);
+      }
+      return article;
+    }),
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
-    onClick: title => {
-      dispatch(setCurrent(slugify(title)));
+    onClick: slug => {
+      dispatch(setCurrent(slug));
     },
   };
 };

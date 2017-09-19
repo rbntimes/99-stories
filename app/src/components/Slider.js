@@ -2,11 +2,12 @@ import React from 'react';
 
 import './style.css';
 
-export default ({ children, onChange, value }) =>
+export default ({ onChange, value }) =>
   <input
-    min={10}
-    max={50}
-    value={value * 10}
-    onChange={val => onChange(val)}
+    min={0.1}
+    max={5}
+    step={0.01}
+    value={value}
+    onChange={e => onChange(e.target.value)}
     type="range"
   />;

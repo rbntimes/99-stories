@@ -1,26 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import slugify from 'slugify';
+import find from 'lodash/find';
 
 import Article from './../components/Article';
 
 import { articles } from './../constants';
 
-const Art = ({ title }) =>
+const Art = ({ article }) =>
   <main>
-    {articles
-      .filter(article => {
-        return slugify(article.title, { lower: true }) === title;
-      })
-      .map(article =>
-        <Article key={title} title={article.title} content={article.body} />
-      )}
+    <Article key={article.slug} title={article.title} content={article.body} />
   </main>;
 
-const mapStateToProps = (state, ownProps) => {
-  console.log(state);
+const mapStateToProps = state => {
   return {
-    title: state.stories.article,
+    article: find(articles, { slug: state.stories.article }),
   };
 };
 

@@ -1,8 +1,8 @@
-const stories = (state = [], action) => {
+const stories = (state = { niveau: 1 }, action) => {
   switch (action.type) {
     case 'SET_LEVEL':
       return Object.assign({}, state, {
-        niveau: Math.ceil(action.niveau / 10),
+        niveau: action.niveau,
       });
     case 'SET_CURRENT':
       return Object.assign({}, state, {

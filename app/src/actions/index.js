@@ -1,13 +1,13 @@
 export const setLevel = niveau => {
   return {
     type: 'SET_LEVEL',
-    niveau
-  }
-}
+    niveau,
+  };
+};
 
 export const setCurrent = slug => {
   return {
     type: 'SET_CURRENT',
-    slug
-  }
-}
+    slug,
+  };
+};

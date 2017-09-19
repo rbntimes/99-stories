@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { connect } from 'react-redux';
 import { setLevel } from './../actions';
@@ -16,25 +16,24 @@ const Setup = ({ onChange, niveau = 1 }) =>
   <main>
     <H1>Hoe lees jij graag?</H1>
     <P>
-      {getOr('Geen tekst gevonden', [niveau, 'text'], constants)}
+      {getOr('Geen tekst gevonden', [Math.ceil(niveau), 'text'], constants)}
     </P>
-    <Slider onChange={e => onChange(e.target.value)} value={niveau} />
+    <Slider onChange={value => onChange(value)} value={niveau} />
     <Button>
-      <Link to={`/articles/${niveau}`}>
+      <Link to={`/articles/${Math.ceil(niveau)}`}>
         Ik lees graag{' '}
-        {getOr('Geen tekst gevonden', [niveau, 'name'], constants)}
+        {getOr('Geen tekst gevonden', [Math.ceil(niveau), 'name'], constants)}
       </Link>
     </Button>
   </main>;
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     niveau: state.stories.niveau,
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log(ownProps, 'ehfaejhu');
+const mapDispatchToProps = dispatch => {
   return {
     onChange: val => {
       dispatch(setLevel(val));
