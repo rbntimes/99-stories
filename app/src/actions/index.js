@@ -11,3 +11,18 @@ export const setCurrent = slug => {
     slug,
   };
 };
+
+export const setSelection = text => {
+  return {
+    type: 'SET_SELECTION',
+    text,
+  };
+};
+
+export const setComment = (selected, comment) => {
+  return {
+    type: 'SET_COMMENT',
+    selected,
+    comment,
+  };
+};
