@@ -12,14 +12,16 @@ const Article = styled.article`
 
 export default function({ article, niveau, onClick }) {
   return (
-    <Article onClick={() => onClick(article.slug)}>
-      <Link to={`${niveau}/${article.slug}`}>
-        <H3>
-          {article.title}
-        </H3>
-      </Link>
-      <p dangerouslySetInnerHTML={{ __html: nl2br(article.body) }} />
-      <Link to="/">terug</Link>
-    </Article>
+    <li>
+      <Article onClick={() => onClick(article.slug)}>
+        <Link to={`${niveau}/${article.slug}`}>
+          <H3>
+            {article.title}
+          </H3>
+        </Link>
+        <p dangerouslySetInnerHTML={{ __html: nl2br(article.body) }} />
+        <Link to="/">terug</Link>
+      </Article>
+    </li>
   );
 }

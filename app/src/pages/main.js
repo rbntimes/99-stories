@@ -8,7 +8,7 @@ import { articles } from './../constants';
 
 const Main = ({ articles, niveau, onClick }) => {
   return (
-    <main>
+    <ul>
       {articles.map(article =>
         <ListItem
           niveau={Math.ceil(niveau)}
@@ -17,7 +17,7 @@ const Main = ({ articles, niveau, onClick }) => {
           article={article}
         />
       )}
-    </main>
+    </ul>
   );
 };
 

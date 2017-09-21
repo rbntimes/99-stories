@@ -13,7 +13,7 @@ import Slider from './../components/Slider';
 import constants from './../constants';
 
 const Setup = ({ onChange, niveau = 1 }) =>
-  <main>
+  <section>
     <H1>Hoe lees jij graag?</H1>
     <P>
       {getOr('Geen tekst gevonden', [Math.ceil(niveau), 'text'], constants)}
@@ -25,7 +25,7 @@ const Setup = ({ onChange, niveau = 1 }) =>
         {getOr('Geen tekst gevonden', [Math.ceil(niveau), 'name'], constants)}
       </Link>
     </Button>
-  </main>;
+  </section>;
 
 const mapStateToProps = state => {
   return {
