@@ -23,14 +23,16 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <Header />
-        <Switch>
-          <Route exact path="/" component={Setup} />
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={Login} />
-          <Route exact path="/articles" component={Main} />
-          <Route exact path="/articles/:niveau" component={Main} />
-          <Route path="/articles/:niveau/:article" component={Article} />
-        </Switch>
+        <section>
+          <Switch>
+            <Route exact path="/" component={Setup} />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
+            <Route exact path="/articles" component={Main} />
+            <Route exact path="/articles/:niveau" component={Main} />
+            <Route path="/articles/:niveau/:article" component={Article} />
+          </Switch>
+        </section>
       </div>
     </BrowserRouter>
   </Provider>,
