@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { setLevel } from './../actions';
@@ -9,38 +9,66 @@ import P from './../components/P';
 import H1 from './../components/H1';
 import Button from './../components/Button';
 import Slider from './../components/Slider';
+import fire from './../fire';
 
 import constants from './../constants';
 
-const Setup = ({ onChange, niveau = 1 }) =>
-  <section>
-    <H1>Hoe lees jij graag?</H1>
-    <P>
-      {getOr('Geen tekst gevonden', [Math.ceil(niveau), 'text'], constants)}
-    </P>
-    <Slider onChange={value => onChange(value)} value={niveau} />
-    <Button>
-      <Link to={`/articles/${Math.ceil(niveau)}`}>
-        Ik lees graag{' '}
-        {getOr('Geen tekst gevonden', [Math.ceil(niveau), 'name'], constants)}
-      </Link>
-    </Button>
-  </section>;
+function setReadingNiveau(user, niveau) {
+  console.log(user, niveau, 'userniveau');
+  const niveauRef = fire.database().ref(`users/${user.uid}`).set({
+    niveau: niveau,
+  });
+}
 
-const mapStateToProps = state => {
-  return {
-    niveau: state.stories.niveau,
-  };
-};
+class Setup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      niveau: props.niveau,
+    };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onChange: val => {
-      dispatch(setLevel(val));
-    },
-  };
-};
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-const SetupContainer = connect(mapStateToProps, mapDispatchToProps)(Setup);
+  handleChange(event) {
+    this.setState({ niveau: event.target.value });
+  }
 
-export default SetupContainer;
+  render() {
+    const { onChange, user } = this.props;
+    return (
+      <section>
+        <H1>Hoe lees jij graag?</H1>
+        <P>
+          {getOr(
+            'Geen tekst gevonden',
+            [Math.ceil(this.state.niveau), 'text'],
+            constants
+          )}
+        </P>
+        <input
+          min={0.01}
+          max={5}
+          step={0.01}
+          type="range"
+          onChange={this.handleChange}
+          value={this.state.niveau}
+        />
+        <button
+          onClick={() => setReadingNiveau(user, Math.ceil(this.state.niveau))}
+        >
+          <Link to={`/articles/${Math.ceil(this.state.niveau)}`}>
+            Ik lees graag{' '}
+            {getOr(
+              'Geen tekst gevonden',
+              [Math.ceil(this.state.niveau), 'name'],
+              constants
+            )}
+          </Link>
+        </button>
+      </section>
+    );
+  }
+}
+
+export default Setup;
