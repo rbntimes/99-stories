@@ -7,5 +7,5 @@ export default ({ title, content }) =>
     <H3>
       {title}
     </H3>
-    <p dangerouslySetInnerHTML={{ __html: nl2br(content) }} />
+    <p dangerouslySetInnerHTML={{ __html: content }} />
   </article>;
