@@ -7,12 +7,12 @@ class Select extends Component {
   }
 
   componentDidMount() {
-    const target = document.querySelector('[data-selectable]');
+    const target = document.querySelector('[data-selectable]:not([mark])');
     target.addEventListener('mouseup', this._handleMouseUp);
   }
 
   componentWillUnmount() {
-    const target = document.querySelector('[data-selectable]');
+    const target = document.querySelector('[data-selectable]:not([mark])');
     target.removeEventListener('mouseup', this._handleMouseUp);
   }
 
@@ -22,7 +22,12 @@ class Select extends Component {
   }
 
   _handleMouseUp = () => {
-    this.props.onSelect(window.getSelection().toString());
+    if (window.getSelection().toString()) {
+      this.props.onSelect(window.getSelection().toString());
+    } else {
+      this.props.onSelect(undefined);
+    }
+    return;
   };
 }
 
