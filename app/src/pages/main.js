@@ -6,41 +6,28 @@ import { setCurrent } from './../actions';
 
 import { articles } from './../constants';
 
-const Main = ({ articles, niveau, onClick }) => {
+const Main = ({ niveau }) => {
   return (
-    <ul>
-      {articles.map(article =>
-        <ListItem
-          niveau={Math.ceil(niveau)}
-          onClick={slug => onClick(slug)}
-          key={article.slug}
-          article={article}
-        />
-      )}
-    </ul>
+    <section>
+      <ul>
+        {articles
+          .filter(article => {
+            if (Math.ceil(niveau)) {
+              return article.niveau === Math.ceil(niveau);
+            }
+          })
+          .map(article => {
+            return (
+              <ListItem
+                niveau={Math.ceil(niveau)}
+                key={article.slug}
+                article={article}
+              />
+            );
+          })}
+      </ul>
+    </section>
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    niveau: state.stories.niveau,
-    articles: articles.filter(article => {
-      if (Math.ceil(state.stories.niveau)) {
-        return article.niveau === Math.ceil(state.stories.niveau);
-      }
-      return article;
-    }),
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onClick: slug => {
-      dispatch(setCurrent(slug));
-    },
-  };
-};
-
-const mainContainer = connect(mapStateToProps, mapDispatchToProps)(Main);
-
-export default mainContainer;
+export default Main;
