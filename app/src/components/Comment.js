@@ -36,35 +36,40 @@ class Comments extends Component {
   render() {
     return (
       <aside>
-        <p>
-          - "{getOr('aa', 'selected', this.props.selected)}"
-        </p>
-        <p>
-          {getOr('aa', 'comment', this.props.selected)}
-        </p>
-        <p>
-          Door:
-          {getOr('aa', 'user', this.props.selected)}
-        </p>
-        {this.props.selected && this.props.selected.comments
-          ? Object.keys(this.props.selected.comments).map(comment =>
-              <form key={comment} onSubmit={this.handleSubmit}>
-                <span>
-                  {this.props.selected.comments[comment].comment}
-                </span>
+        <section>
+          <p>
+            - "{getOr('aa', 'selected', this.props.selected)}"
+          </p>
+          <p>
+            {getOr('aa', 'comment', this.props.selected)}
+          </p>
+          <p>
+            Door:
+            {getOr('aa', 'user', this.props.selected)}
+          </p>
+          {this.props.selected && this.props.selected.comments
+            ? Object.keys(this.props.selected.comments).map(comment =>
+                <form key={comment} onSubmit={this.handleSubmit}>
+                  <span>
+                    {this.props.selected.comments[comment].comment}
+                  </span>
+                  <input
+                    value={this.state.comment}
+                    onChange={this.handleInput}
+                  />
+                  <button>post</button>
+                </form>
+              )
+            : <span>aa</span>}
+          {this.props.user
+            ? <form onSubmit={this.handleSubmit}>
                 <input value={this.state.comment} onChange={this.handleInput} />
                 <button>post</button>
               </form>
-            )
-          : <span>aa</span>}
-        {this.props.user
-          ? <form onSubmit={this.handleSubmit}>
-              <input value={this.state.comment} onChange={this.handleInput} />
-              <button>post</button>
-            </form>
-          : <span>
-              <Link to="/login">Log</Link> eerst in om te kunnen reageren
-            </span>}
+            : <span>
+                <Link to="/login">Log</Link> eerst in om te kunnen reageren
+              </span>}
+        </section>
       </aside>
     );
   }

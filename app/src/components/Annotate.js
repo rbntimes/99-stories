@@ -36,15 +36,17 @@ class Comments extends Component {
   render() {
     return (
       <aside>
-        <p>
-          {getOr('', 'selected', this.props)}
-        </p>
-        {this.props.selected
-          ? <form onSubmit={this.handleSubmit}>
-              <input value={this.state.comment} onChange={this.handleInput} />
-              <button>post</button>
-            </form>
-          : <span>Selecteer een tekst om te reageren</span>}
+        <section>
+          <p>
+            {getOr('', 'selected', this.props)}
+          </p>
+          {this.props.selected
+            ? <form onSubmit={this.handleSubmit}>
+                <input value={this.state.comment} onChange={this.handleInput} />
+                <button>post</button>
+              </form>
+            : <span>Selecteer een tekst om te reageren</span>}
+        </section>
       </aside>
     );
   }

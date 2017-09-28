@@ -21,7 +21,11 @@ main {
 }
 
 aside {
-  width: 40%;
+  width: 50%;
+}
+
+aside > section {
+  position: fixed;
 }
 
 article {
