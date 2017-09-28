@@ -26,3 +26,18 @@ export const setComment = (selected, comment) => {
     comment,
   };
 };
+
+export const selectComment = comment => {
+  return {
+    type: 'SELECT_COMMENT',
+    comment,
+  };
+};
+
+export const setLoggedIn = user => {
+  console.log(user, 'hierrr');
+  return {
+    type: 'SET_LOGGED_IN',
+    user,
+  };
+};

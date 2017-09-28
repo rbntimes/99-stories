@@ -1,7 +1,6 @@
 const stories = (
   state = {
     niveau: 2,
-    article: 'stijloefeningen-17-geert-wilders',
     comments: [],
   },
   action
@@ -19,6 +18,10 @@ const stories = (
       return Object.assign({}, state, {
         selected: action.text,
       });
+    case 'SELECT_COMMENT':
+      return Object.assign({}, state, {
+        selectedAnnotation: action.comment,
+      });
     case 'SET_COMMENT':
       return Object.assign({}, state, {
         comments: [
@@ -29,6 +32,10 @@ const stories = (
           },
         ],
         selected: '',
+      });
+    case 'SET_LOGGED_IN':
+      return Object.assign({}, state, {
+        user: action.user,
       });
     default:
       return state;
