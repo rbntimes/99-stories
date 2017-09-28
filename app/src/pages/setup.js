@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-import { setLevel } from './../actions';
 import getOr from 'lodash/fp/getOr';
 import { Link } from 'react-router-dom';
 
 import P from './../components/P';
 import H1 from './../components/H1';
-import Button from './../components/Button';
-import Slider from './../components/Slider';
 import fire from './../fire';
 
 import constants from './../constants';
 
 function setReadingNiveau(user, niveau) {
-  console.log(user, niveau, 'userniveau');
-  const niveauRef = fire.database().ref(`users/${user.uid}`).set({
+  fire.database().ref(`users/${user.uid}`).set({
     niveau: niveau,
   });
 }
@@ -35,7 +30,7 @@ class Setup extends Component {
   }
 
   render() {
-    const { onChange, user } = this.props;
+    const { user } = this.props;
     return (
       <section>
         <H1>Hoe lees jij graag?</H1>

@@ -7,10 +7,6 @@ import P from './../components/P';
 import H3 from './../components/H3';
 import Field from './../components/Field';
 
-function createUser(form) {
-  console.log(form);
-}
-
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -30,14 +26,10 @@ class Register extends Component {
   }
 
   handleSubmit(event) {
-    console.log(this.state);
     fire
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.pass1)
-      .catch(function(error) {
-        // Handle Errors here.
-        // ...
-      });
+      .catch(function(error) {});
     event.preventDefault();
   }
 

@@ -30,9 +30,8 @@ class Register extends Component {
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.pass1)
       .catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(error);
+        // var errorCode = error.code;
+        // var errorMessage = error.message;
       });
     event.preventDefault();
   }

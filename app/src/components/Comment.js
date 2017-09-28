@@ -1,9 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import styled from 'styled-components';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import getOr from 'lodash/fp/getOr';
-import NsLogo from './../components/NsLogo';
-import H3 from './../components/H3';
 import fire from './../fire';
 import './style.css';
 
@@ -72,9 +69,5 @@ class Comments extends Component {
     );
   }
 }
-
-Comments.propTypes = {};
-
-Comments.defaultProps = {};
 
 export default Comments;

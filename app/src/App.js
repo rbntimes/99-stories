@@ -10,12 +10,6 @@ import Article from './pages/article';
 import Header from './components/Header';
 
 import fire from './fire';
-import { Link } from 'react-router-dom';
-import { setLoggedIn } from './actions';
-
-import P from './components/P';
-import H3 from './components/H3';
-import Field from './components/Field';
 
 class App extends Component {
   constructor(props) {
@@ -26,8 +20,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    let user = fire.database().ref('users');
-    let comments = fire.database().ref('comments');
     fire.auth().onAuthStateChanged(
       function(user) {
         this.setState({
@@ -35,7 +27,6 @@ class App extends Component {
           user: user,
         });
         fire.database().ref(`users/${user.uid}`).on('value', snapshot => {
-          console.log(snapshot);
           this.setState({
             niveau: snapshot.val().niveau,
             dataRetreived: true,
@@ -46,11 +37,10 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props, this.state);
     return [
-      <Header loggedIn={this.state.userIsLoggedIn} />,
+      <Header key="header" loggedIn={this.state.userIsLoggedIn} />,
       this.state.userIsLoggedIn && this.state.dataRetreived
-        ? <Switch>
+        ? <Switch key="switch">
             <Route exact path="/" render={() => <Setup {...this.state} />} />
             <Route
               exact
@@ -68,9 +58,9 @@ class App extends Component {
                 <Article location={location} {...this.state} />}
             />
           </Switch>
-        : <span>Je data wordt geladen, even geduld...</span>,
-      <Route path="/register" component={Register} />,
-      <Route path="/login" component={Login} />,
+        : <span key="loading">Je data wordt geladen, even geduld...</span>,
+      <Route key="register" path="/register" component={Register} />,
+      <Route key="login" path="/login" component={Login} />,
     ];
   }
 }

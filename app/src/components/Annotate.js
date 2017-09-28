@@ -1,16 +1,14 @@
-import React, { Component, PropTypes } from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 import getOr from 'lodash/fp/getOr';
-import NsLogo from './../components/NsLogo';
-import H3 from './../components/H3';
 import fire from './../fire';
 import './style.css';
 
 class Comments extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      comment: '',
+    };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -36,7 +34,6 @@ class Comments extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <aside>
         <p>

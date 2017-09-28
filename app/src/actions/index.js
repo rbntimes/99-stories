@@ -35,7 +35,6 @@ export const selectComment = comment => {
 };
 
 export const setLoggedIn = user => {
-  console.log(user, 'hierrr');
   return {
     type: 'SET_LOGGED_IN',
     user,

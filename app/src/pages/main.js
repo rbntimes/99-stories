@@ -1,8 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import ListItem from './../components/ListItem';
-
-import { setCurrent } from './../actions';
 
 import { articles } from './../constants';
 
@@ -12,9 +9,7 @@ const Main = ({ niveau }) => {
       <ul>
         {articles
           .filter(article => {
-            if (Math.ceil(niveau)) {
-              return article.niveau === Math.ceil(niveau);
-            }
+            return article.niveau === Math.ceil(niveau);
           })
           .map(article => {
             return (

@@ -72,7 +72,6 @@ class Art extends Component {
   }
 
   handleSelect(event) {
-    console.log(event);
     if (event) {
       this.setState({
         selectedAnnotation: undefined,
@@ -81,20 +80,14 @@ class Art extends Component {
       this.props.onSelect(event);
     } else {
       this.setState({
+        selectedAnnotation: undefined,
         selected: undefined,
       });
     }
   }
 
   render() {
-    const {
-      onSelect,
-      onSubmit,
-      selected,
-      comments,
-      userIsLoggedIn,
-      user,
-    } = this.props;
+    const { onSubmit, userIsLoggedIn, user } = this.props;
     const article = find(articles, { slug: this.state.article });
     return (
       <main>

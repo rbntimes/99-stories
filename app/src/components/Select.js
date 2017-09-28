@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import { Component } from 'react';
 
 class Select extends Component {
   constructor(props) {
@@ -30,9 +30,5 @@ class Select extends Component {
     return;
   };
 }
-
-Select.propTypes = {};
-
-Select.defaultProps = {};
 
 export default Select;
