@@ -17,5 +17,5 @@ export default ({ loggedIn }) =>
           <Link to="/login">Inloggen</Link>
         </div>
       : <button onClick={() => fire.auth().signOut()}> Logout </button>}
-    <H3 color="white">x nurks</H3>
+    <H3 color="white">nurks</H3>
   </header>;

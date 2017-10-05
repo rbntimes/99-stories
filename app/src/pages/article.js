@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import find from 'lodash/find';
 
@@ -17,6 +18,7 @@ class Art extends Component {
     super(props);
     this.state = {
       commentsLoaded: false,
+      showComments: false,
       selectedAnnotation: props.selectedAnnotation,
       selected: props.selected,
       article: props.location.pathname.substr(
@@ -24,9 +26,9 @@ class Art extends Component {
       ),
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.showComments = this.showComments.bind(this);
     window.handleClick = this.handleClick;
   }
 
@@ -36,19 +38,16 @@ class Art extends Component {
       .ref(`comments/${this.state.article}`)
       .on('value', snapshot => {
         this.setState({
-          comments: snapshot.val(),
+          comments: snapshot.val() || {},
           commentsLoaded: true,
         });
       });
   }
 
-  handleChange(event) {
-    this.setState({ niveau: event.target.value });
-  }
-
   handleClick(selected) {
     if (selected.length) {
       this.setState({
+        showComments: true,
         selectedAnnotation: selected,
       });
       this.props.onClick(selected);
@@ -56,18 +55,17 @@ class Art extends Component {
   }
 
   highlight(body, comments) {
-    let article = body;
-    if (comments) {
-      Object.keys(comments).map(
-        comment =>
-          (article = article.replace(
-            comments[comment].selected,
-            `<mark onClick="window.handleClick('${comment}')">${comments[
-              comment
-            ].selected}</mark>`
-          ))
-      );
-    }
+    let article = body
+      .replace(/(\r\n|\n|\r)/gm, '')
+      .split('. ')
+      .map(
+        sentence =>
+          `<mark
+            ${this.state.selectedAnnotation === sentence ? 'selected' : ''}
+            ${this.state.comments[sentence] ? 'comment' : ''}
+            onClick="window.handleClick('${sentence}')">${sentence}.</mark> <br />`
+      )
+      .join('');
     return article;
   }
 
@@ -86,38 +84,58 @@ class Art extends Component {
     }
   }
 
+  showComments() {
+    this.setState({
+      showComments: !this.state.showComments,
+    });
+  }
+
   render() {
     const { onSubmit, userIsLoggedIn, user } = this.props;
     const article = find(articles, { slug: this.state.article });
-    return (
-      <main>
-        <Select onSelect={this.handleSelect}>
-          <Article
-            key={article.slug}
-            title={article.title}
-            selected={this.state.selected}
-            content={
-              this.state.commentsLoaded &&
-              this.highlight(article.body, this.state.comments)
-            }
-          />
-        </Select>
-        {this.state.selectedAnnotation
-          ? <Comment
+    return [
+      this.state.showComments && (
+        <span onClick={this.showComments}>
+          <a>x</a>
+        </span>
+      ),
+      <main showcomments={this.state.showComments ? 'true' : 'false'}>
+        <Article
+          key={article.slug}
+          title={article.title}
+          selected={this.state.selected}
+          content={this.state.commentsLoaded && this.highlight(article.body)}
+        />
+      </main>,
+      this.state.commentsLoaded &&
+        this.state.showComments && (
+          <aside>
+            <Comment
               user={userIsLoggedIn && user}
               article={article.slug}
               onSubmit={onSubmit}
-              comment={this.props.selectedAnnotation}
-              selected={this.state.comments[this.props.selectedAnnotation]}
+              comment={this.state.selectedAnnotation}
+              selected={this.state.comments[this.state.selectedAnnotation]}
             />
-          : <Annotate
+            <Annotate
               user={userIsLoggedIn && user}
               article={article.slug}
               onSubmit={onSubmit}
-              selected={this.state.selected}
-            />}
-      </main>
-    );
+              annotateSentence={this.state.selectedAnnotation}
+            />
+          </aside>
+        ),
+      this.props.user.isAnonymous &&
+        this.state.showComments && (
+          <aside>
+            <section>
+              <h2>Hiervoor heb je een account nodig</h2>
+              <Link to="/register">Maak deze eerst aan</Link>
+              <Link to="/login">of log in als je deze al hebt</Link>
+            </section>
+          </aside>
+        ),
+    ];
   }
 }
 

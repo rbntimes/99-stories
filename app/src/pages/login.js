@@ -35,26 +35,28 @@ class Register extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <H3>Registreren</H3>
-        <P>Hieronder kunt u zich registreren</P>
-        <Field label="Email:">
-          <input
-            value={this.state.email}
-            onChange={e => this.handleChange('email', e.target.value)}
-            type="email"
-          />
-        </Field>
-        <Field label="Wachtwoord:">
-          <input
-            value={this.state.pass1}
-            onChange={e => this.handleChange('pass1', e.target.value)}
-            type="password"
-          />
-        </Field>
-        <input type="submit" value="Submit" />
-        <Link to="/">terug</Link>
-      </form>
+      <main>
+        <form onSubmit={this.handleSubmit}>
+          <H3>Registreren</H3>
+          <P>Hieronder kunt u zich registreren</P>
+          <Field label="Email:">
+            <input
+              value={this.state.email}
+              onChange={e => this.handleChange('email', e.target.value)}
+              type="email"
+            />
+          </Field>
+          <Field label="Wachtwoord:">
+            <input
+              value={this.state.pass1}
+              onChange={e => this.handleChange('pass1', e.target.value)}
+              type="password"
+            />
+          </Field>
+          <input type="submit" value="Submit" />
+          <Link to="/">terug</Link>
+        </form>
+      </main>
     );
   }
 }

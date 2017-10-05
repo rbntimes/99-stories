@@ -13,7 +13,7 @@ export default function({ article, niveau, onClick }) {
           </H3>
         </Link>
         <p>
-          {article.body.substr(0, 100)}
+          {article.body.substr(0, 200)}
         </p>
         <Link to="/">terug</Link>
       </article>

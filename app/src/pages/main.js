@@ -5,7 +5,7 @@ import { articles } from './../constants';
 
 const Main = ({ niveau }) => {
   return (
-    <section>
+    <main>
       <ul>
         {articles
           .filter(article => {
@@ -21,7 +21,7 @@ const Main = ({ niveau }) => {
             );
           })}
       </ul>
-    </section>
+    </main>
   );
 };
 

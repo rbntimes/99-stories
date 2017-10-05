@@ -21,10 +21,11 @@ class Comments extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const itemsRef = fire.database().ref(`comments/${this.props.article}`);
+    const itemsRef = fire
+      .database()
+      .ref(`comments/${this.props.article}/${this.props.annotateSentence}`);
     const item = {
       user: this.props.user.email,
-      selected: this.props.selected,
       comment: this.state.comment,
     };
     itemsRef.push(item);
@@ -34,21 +35,17 @@ class Comments extends Component {
   }
 
   render() {
-    return (
-      <aside>
-        <section>
-          <p>
-            {getOr('', 'selected', this.props)}
-          </p>
-          {this.props.selected
-            ? <form onSubmit={this.handleSubmit}>
-                <input value={this.state.comment} onChange={this.handleInput} />
-                <button>post</button>
-              </form>
-            : <span>Selecteer een tekst om te reageren</span>}
-        </section>
-      </aside>
-    );
+    const { annotateSentence } = this.props;
+    const { comment } = this.state;
+
+    if (annotateSentence) {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <input value={comment} onChange={this.handleInput} />
+          <button>post</button>
+        </form>
+      );
+    }
   }
 }
 
