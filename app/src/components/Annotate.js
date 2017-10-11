@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import getOr from 'lodash/fp/getOr';
 import fire from './../fire';
 import './style.css';
@@ -35,16 +36,26 @@ class Comments extends Component {
   }
 
   render() {
-    const { annotateSentence } = this.props;
+    const { annotateSentence, user } = this.props;
     const { comment } = this.state;
 
-    if (annotateSentence) {
+    if (annotateSentence && user) {
       return (
         <form onSubmit={this.handleSubmit}>
           <input value={comment} onChange={this.handleInput} />
-          <button>post</button>
+          <button>annotate</button>
         </form>
       );
+    } else {
+      {
+        return [
+          <section>
+            <span>Om hier op te reageren heb je een account nodig!</span>,
+            <Link to="/register">Maak deze eerst aan</Link>,
+            <Link to="/login">of log in als je deze al hebt</Link>,
+          </section>,
+        ];
+      }
     }
   }
 }
