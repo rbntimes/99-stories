@@ -16,7 +16,7 @@ class Register extends Component {
       pass1: '',
       pass2: '',
     };
-
+    console.log(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -26,38 +26,51 @@ class Register extends Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault();
     fire
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.pass1)
       .catch(function(error) {});
-    event.preventDefault();
+    this.props.history.push('/');
   }
 
   render() {
-    return (
+    return [
       <main>
         <form onSubmit={this.handleSubmit}>
-          <H3>Registreren</H3>
-          <P>Hieronder kunt u zich registreren</P>
-          <Field label="Email:">
-            <input
-              value={this.state.email}
-              onChange={e => this.handleChange('email', e.target.value)}
-              type="email"
-            />
-          </Field>
-          <Field label="Wachtwoord:">
-            <input
-              value={this.state.pass1}
-              onChange={e => this.handleChange('pass1', e.target.value)}
-              type="password"
-            />
-          </Field>
-          <input type="submit" value="Submit" />
-          <Link to="/">terug</Link>
+          <fieldset>
+            <legend>Inloggen</legend>
+            <Field label="Email:">
+              <input
+                value={this.state.email}
+                onChange={e => this.handleChange('email', e.target.value)}
+                type="email"
+              />
+            </Field>
+            <Field label="Wachtwoord:">
+              <input
+                value={this.state.pass1}
+                onChange={e => this.handleChange('pass1', e.target.value)}
+                type="password"
+              />
+            </Field>
+            <input type="submit" value="Submit" />
+            <Link to="/">terug</Link>
+          </fieldset>
         </form>
-      </main>
-    );
+      </main>,
+      <aside>
+        <section>
+          <h2>Waarom zou ik registreren?</h2>
+          <p>
+            Donec id elit non mi porta gravida at eget metus. Nullam quis risus
+            eget urna mollis ornare vel eu leo. Nullam id dolor id nibh
+            ultricies vehicula ut id elit. Etiam porta sem malesuada magna
+            mollis euismod. Donec ullamcorper nulla non metus auctor fringilla.
+          </p>
+        </section>
+      </aside>,
+    ];
   }
 }
 

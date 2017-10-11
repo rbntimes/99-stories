@@ -50,7 +50,6 @@ class Art extends Component {
         showComments: true,
         selectedAnnotation: selected,
       });
-      this.props.onClick(selected);
     }
   }
 
@@ -92,74 +91,53 @@ class Art extends Component {
 
   render() {
     const { onSubmit, userIsLoggedIn, user } = this.props;
+    const {
+      showComments,
+      commentsLoaded,
+      selected,
+      selectedAnnotation,
+      comments,
+    } = this.state;
     const article = find(articles, { slug: this.state.article });
+
     return [
-      this.state.showComments && (
-        <span onClick={this.showComments}>
-          <a>x</a>
-        </span>
-      ),
-      <main showcomments={this.state.showComments ? 'true' : 'false'}>
+      <main showcomments={showComments ? 'true' : 'false'}>
         <Article
           key={article.slug}
           title={article.title}
-          selected={this.state.selected}
-          content={this.state.commentsLoaded && this.highlight(article.body)}
+          selected={selected}
+          content={commentsLoaded && this.highlight(article.body)}
         />
       </main>,
-      this.state.commentsLoaded &&
-        this.state.showComments && (
-          <aside>
+      commentsLoaded && showComments ? (
+        <aside data-comments>
+          <section>
+            <a onClick={this.showComments}>x</a>
             <Comment
-              user={userIsLoggedIn && user}
+              user={userIsLoggedIn ? user : false}
               article={article.slug}
               onSubmit={onSubmit}
-              comment={this.state.selectedAnnotation}
-              selected={this.state.comments[this.state.selectedAnnotation]}
+              comment={selectedAnnotation}
+              selected={comments[selectedAnnotation]}
             />
             <Annotate
-              user={userIsLoggedIn && user}
+              user={userIsLoggedIn ? user : false}
               article={article.slug}
               onSubmit={onSubmit}
-              annotateSentence={this.state.selectedAnnotation}
+              annotateSentence={selectedAnnotation}
             />
-          </aside>
-        ),
-      this.props.user.isAnonymous &&
-        this.state.showComments && (
-          <aside>
-            <section>
-              <h2>Hiervoor heb je een account nodig</h2>
-              <Link to="/register">Maak deze eerst aan</Link>
-              <Link to="/login">of log in als je deze al hebt</Link>
-            </section>
-          </aside>
-        ),
+          </section>
+        </aside>
+      ) : (
+        <aside>
+          <section>
+            <h2>Reacties / annotaties</h2>
+            <p>Klik in het artikel om reacties of annotaties te laden!</p>
+          </section>
+        </aside>
+      ),
     ];
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    selected: state.stories.selected,
-    selectedAnnotation: state.stories.selectedAnnotation,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onSelect: text => {
-      dispatch(setSelection(text));
-    },
-    onClick: comment => {
-      dispatch(selectComment(comment));
-    },
-    onSubmit: (selected, comment) => {
-      dispatch(setComment(selected, comment));
-    },
-  };
-};
-
-const ArticleContainer = connect(mapStateToProps, mapDispatchToProps)(Art);
-
-export default ArticleContainer;
+export default Art;

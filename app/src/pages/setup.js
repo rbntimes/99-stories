@@ -10,14 +10,18 @@ import fire from './../fire';
 import constants from './../constants';
 
 function setReadingNiveau(user, niveau) {
-  fire.database().ref(`users/${user.uid}`).set({
-    niveau: niveau,
-  });
+  fire
+    .database()
+    .ref(`users/${user.uid}`)
+    .set({
+      niveau: niveau,
+    });
 }
 
 class Setup extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       niveau: props.niveau,
     };
@@ -31,8 +35,8 @@ class Setup extends Component {
 
   render() {
     const { user } = this.props;
-    return (
-      <section>
+    return [
+      <main>
         <H1>Hoe lees jij graag?</H1>
         <P>
           {getOr(
@@ -41,6 +45,8 @@ class Setup extends Component {
             constants
           )}
         </P>
+      </main>,
+      <footer>
         <input
           min={0.01}
           max={5}
@@ -61,8 +67,8 @@ class Setup extends Component {
             )}
           </Link>
         </button>
-      </section>
-    );
+      </footer>,
+    ];
   }
 }
 
