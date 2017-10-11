@@ -41,30 +41,28 @@ class Comments extends Component {
   }
 
   render() {
-    console.log(this.state, this.props);
+    const { comment, selected } = this.props;
     return [
-      <section>
-        <h2>Reacties</h2>
-        <p>"{getOr('aa', 'comment', this.props)}"</p>
-      </section>,
-      <section>
-        {this.props.selected &&
-          Object.keys(this.props.selected).map(comment => {
-            return (
-              <span key={comment}>
-                {`${this.props.selected[comment].comment} - door ${this.props
-                  .selected[comment].user}`}
-                <ul>
-                  {this.props.selected[comment].comments &&
-                    Object.keys(
-                      this.props.selected[comment].comments
-                    ).map(inlineComment => (
-                      <li key={inlineComment}>
-                        {`${this.props.selected[comment].comments[inlineComment]
-                          .comment} - door ${this.props.selected[comment]
-                          .comments[inlineComment].user}`}
-                      </li>
-                    ))}
+      <blockquote>"{comment}"</blockquote>,
+      <h2>Reacties</h2>,
+      selected &&
+        Object.keys(selected).map(comment => {
+          return (
+            <span key={comment}>
+              {`${this.props.selected[comment].comment} - door ${this.props
+                .selected[comment].user}`}
+              <ul>
+                {this.props.selected[comment].comments &&
+                  Object.keys(
+                    this.props.selected[comment].comments
+                  ).map(inlineComment => (
+                    <li key={inlineComment}>
+                      {`${this.props.selected[comment].comments[inlineComment]
+                        .comment} - door ${this.props.selected[comment]
+                        .comments[inlineComment].user}`}
+                    </li>
+                  ))}
+                {this.props.user && (
                   <form onSubmit={this.handleSubmit}>
                     <textarea
                       value={this.state[comment]}
@@ -72,11 +70,11 @@ class Comments extends Component {
                     />
                     <button>post</button>
                   </form>
-                </ul>
-              </span>
-            );
-          })}
-      </section>,
+                )}
+              </ul>
+            </span>
+          );
+        }),
     ];
   }
 }

@@ -1,21 +1,23 @@
 import React from 'react';
 
-import H3 from './../components/H3';
 import { Link } from 'react-router-dom';
 
-export default function({ article, niveau, onClick }) {
+export default function({ article, type, count }) {
   return (
     <li>
       <article>
-        <Link to={`${niveau}/${article.slug}`}>
-          <H3>
-            {article.title}
-          </H3>
+        <Link to={`articles/${article.slug}`}>
+          {type === 'large' ? (
+            <h1>
+              {article.title} {count}
+            </h1>
+          ) : (
+            <h3>
+              {article.title} {count}
+            </h3>
+          )}
         </Link>
-        <p>
-          {article.body.substr(0, 200)}
-        </p>
-        <Link to="/">terug</Link>
+        <p>{article.body.substr(0, type === 'large' ? 500 : 100)}</p>
       </article>
     </li>
   );

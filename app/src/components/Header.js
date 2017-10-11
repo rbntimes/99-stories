@@ -6,16 +6,17 @@ import H3 from './../components/H3';
 import fire from './../fire';
 import './style.css';
 
-export default ({ loggedIn }) =>
+export default ({ loggedIn }) => (
   <header>
-    <Link to="/">
-      <NsLogo color="#fff" />
-    </Link>
-    {!loggedIn
-      ? <div>
-          <Link to="/register">Registreren</Link>
-          <Link to="/login">Inloggen</Link>
-        </div>
-      : <button onClick={() => fire.auth().signOut()}> Logout </button>}
-    <H3 color="white">nurks</H3>
-  </header>;
+    <nav>
+      <Link to="/">
+        <NsLogo color="#fff" />
+      </Link>
+      {!loggedIn ? (
+        <Link to="/login">Mijn account</Link>
+      ) : (
+        <a onClick={() => fire.auth().signOut()}> Logout </a>
+      )}
+    </nav>
+  </header>
+);
