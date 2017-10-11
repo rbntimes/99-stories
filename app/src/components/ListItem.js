@@ -8,9 +8,7 @@ export default function({ article, type, count }) {
       <article>
         <Link to={`articles/${article.slug}`}>
           {type === 'large' ? (
-            <h1>
-              {article.title} {count}
-            </h1>
+            [<h1>{article.title}</h1>, <span>{count}</span>]
           ) : (
             <h3>
               {article.title} {count}

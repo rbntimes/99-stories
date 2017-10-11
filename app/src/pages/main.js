@@ -10,15 +10,7 @@ class Main extends Component {
     super(props);
     this.state = {
       commentsLoaded: false,
-      showComments: false,
-      selectedAnnotation: props.selectedAnnotation,
-      selected: props.selected,
     };
-
-    // this.handleClick = this.handleClick.bind(this);
-    // this.handleSelect = this.handleSelect.bind(this);
-    // this.showComments = this.showComments.bind(this);
-    // window.handleClick = this.handleClick;
   }
 
   componentDidMount() {
@@ -35,7 +27,6 @@ class Main extends Component {
   }
 
   render() {
-    console.log(this.state);
     return [
       <main>
         <ul>
@@ -54,6 +45,12 @@ class Main extends Component {
         </ul>
       </main>,
       <aside>
+        <section>
+          sorteer op:
+          <select>
+            <option value="test">Test</option>
+          </select>
+        </section>
         <section>
           <ul>
             {articles.map(article => (

@@ -56,12 +56,7 @@ section {
   padding: 0;
 }
 
-main > ul > li {
-  max-width: 35em;
-  list-style: none;
-}
-
-main > p {
+main > section > article > p {
   max-width: 35em;
   min-width: 18em;
 }
@@ -84,7 +79,12 @@ aside[data-comments] {
   display: grid;
 }
 
-aside > section {
+aside > section:first-of-type {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+}
+
+aside > section:last-of-type {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
   align-items: flex-start;
@@ -299,7 +299,6 @@ mark:hover {
     box-shadow: 0 0.125rem 0 0 rgba(7, 7, 33, 0.15);
     border-collapse: initial;
     border-spacing: 0;
-    max-width: 35em;
     list-style: none;
     display: grid;
     grid-column: 1 / 4;
