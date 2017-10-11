@@ -22,16 +22,32 @@ class App extends Component {
   componentDidMount() {
     fire.auth().onAuthStateChanged(
       function(user) {
+        console.log(user);
         this.setState({
-          userIsLoggedIn: user ? true : false,
+          userIsLoggedIn: user && !user.isAnonymous ? true : false,
           user: user,
         });
-        fire.database().ref(`users/${user.uid}`).on('value', snapshot => {
-          this.setState({
-            niveau: snapshot.val().niveau,
-            dataRetreived: true,
-          });
-        });
+        if (user) {
+          fire
+            .database()
+            .ref(`users/${user.uid}`)
+            .on('value', snapshot => {
+              this.setState({
+                dataRetreived: true,
+              });
+            });
+        } else {
+          fire
+            .auth()
+            .signInAnonymously()
+            .catch(function(error) {
+              // console.log(error);
+              // Handle Errors here.
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              // ...
+            });
+        }
       }.bind(this)
     );
   }
@@ -39,28 +55,26 @@ class App extends Component {
   render() {
     return [
       <Header key="header" loggedIn={this.state.userIsLoggedIn} />,
-      this.state.userIsLoggedIn && this.state.dataRetreived
-        ? <Switch key="switch">
-            <Route exact path="/" render={() => <Setup {...this.state} />} />
-            <Route
-              exact
-              path="/articles"
-              render={() => <Main {...this.state} />}
-            />
-            <Route
-              exact
-              path="/articles/:niveau"
-              render={() => <Main {...this.state} />}
-            />
-            <Route
-              path="/articles/:niveau/:article"
-              render={({ location }) =>
-                <Article location={location} {...this.state} />}
-            />
-          </Switch>
-        : <span key="loading">Je data wordt geladen, even geduld...</span>,
-      <Route key="register" path="/register" component={Register} />,
-      <Route key="login" path="/login" component={Login} />,
+      this.state.dataRetreived ? (
+        <Switch key="switch">
+          <Route
+            key="home"
+            exact
+            path="/"
+            render={() => <Main {...this.state} />}
+          />
+          <Route
+            path="/articles/:article"
+            render={({ location }) => (
+              <Article location={location} {...this.state} />
+            )}
+          />
+        </Switch>
+      ) : (
+        <span key="loading">Je data wordt geladen, even geduld...</span>
+      ),
+      <Route key="register" path="/register" exact component={Register} />,
+      <Route key="login" path="/login" exact component={Login} />,
     ];
   }
 }
