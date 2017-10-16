@@ -22,20 +22,22 @@ class App extends Component {
   componentDidMount() {
     fire.auth().onAuthStateChanged(
       function(user) {
-        console.log(user);
         this.setState({
           userIsLoggedIn: user && !user.isAnonymous ? true : false,
           user: user,
         });
         if (user) {
-          fire
-            .database()
-            .ref(`users/${user.uid}`)
-            .on('value', snapshot => {
-              this.setState({
-                dataRetreived: true,
-              });
+          const userNode = fire.database().ref(`users/${user.uid}`);
+
+          userNode.set({
+            registered: false,
+          });
+
+          userNode.on('value', snapshot => {
+            this.setState({
+              dataRetreived: true,
             });
+          });
         } else {
           fire
             .auth()
@@ -53,6 +55,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props, this.state);
     return [
       <Header key="header" loggedIn={this.state.userIsLoggedIn} />,
       this.state.dataRetreived ? (
@@ -73,7 +76,12 @@ class App extends Component {
       ) : (
         <span key="loading">Je data wordt geladen, even geduld...</span>
       ),
-      <Route key="register" path="/register" exact component={Register} />,
+      <Route
+        key="register"
+        path="/register"
+        exact
+        render={() => <Register {...this.state} />}
+      />,
       <Route key="login" path="/login" exact component={Login} />,
     ];
   }
