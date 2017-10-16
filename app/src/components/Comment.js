@@ -13,6 +13,7 @@ class Comments extends Component {
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggleReply = this.toggleReply.bind(this);
   }
 
   handleInput(event, comment) {
@@ -27,8 +28,8 @@ class Comments extends Component {
     const itemsRef = fire
       .database()
       .ref(
-        `comments/${this.props.article}/${this.props.comment}/${this.state
-          .selectedComment}/comments`
+        `articles/${this.props.article}/comments/${this.props.comment}/${this
+          .state.selectedComment}/comments`
       );
     const item = {
       user: this.props.user.email,
@@ -40,40 +41,44 @@ class Comments extends Component {
     });
   }
 
+  toggleReply() {
+    console.log('a');
+  }
+
   render() {
-    const { comment, selected } = this.props;
+    const { comment, selected, user } = this.props;
     return [
+      <h3>Molovich schreef: </h3>,
       <blockquote>"{comment}"</blockquote>,
-      <h2>Reacties</h2>,
+      <h3>Reacties</h3>,
       selected &&
         Object.keys(selected).map(comment => {
-          return (
+          return [
             <span key={comment}>
-              {`${this.props.selected[comment].comment} - door ${this.props
-                .selected[comment].user}`}
-              <ul>
-                {this.props.selected[comment].comments &&
-                  Object.keys(
-                    this.props.selected[comment].comments
-                  ).map(inlineComment => (
-                    <li key={inlineComment}>
-                      {`${this.props.selected[comment].comments[inlineComment]
-                        .comment} - door ${this.props.selected[comment]
-                        .comments[inlineComment].user}`}
-                    </li>
-                  ))}
-                {this.props.user && (
-                  <form onSubmit={this.handleSubmit}>
-                    <textarea
-                      value={this.state[comment]}
-                      onChange={e => this.handleInput(e, comment)}
-                    />
-                    <button>post</button>
-                  </form>
-                )}
-              </ul>
-            </span>
-          );
+              {`${selected[comment].comment} - door ${selected[comment].user}`}
+            </span>,
+            <a onClick={this.toggleReply}>reageer</a>,
+            <ul>
+              {selected[comment].comments &&
+                Object.keys(selected[comment].comments).map(inlineComment => (
+                  <li key={inlineComment}>
+                    {`${selected[comment].comments[inlineComment]
+                      .comment} - door ${selected[comment].comments[
+                      inlineComment
+                    ].user}`}
+                  </li>
+                ))}
+              {user && (
+                <form onSubmit={this.handleSubmit}>
+                  <textarea
+                    value={this.state[comment]}
+                    onChange={e => this.handleInput(e, comment)}
+                  />
+                  <button>post</button>
+                </form>
+              )}
+            </ul>,
+          ];
         }),
     ];
   }

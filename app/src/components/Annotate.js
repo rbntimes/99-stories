@@ -24,7 +24,9 @@ class Comments extends Component {
     e.preventDefault();
     const itemsRef = fire
       .database()
-      .ref(`comments/${this.props.article}/${this.props.annotateSentence}`);
+      .ref(
+        `articles/${this.props.article}/comments/${this.props.annotateSentence}`
+      );
     const item = {
       user: this.props.user.email,
       comment: this.state.comment,
