@@ -2,21 +2,40 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-export default function({ article, type, count }) {
-  return (
-    <li>
-      <article>
-        <Link to={`articles/${article.slug}`}>
-          {type === 'large' ? (
-            [<h1>{article.title}</h1>, <span>{count}</span>]
-          ) : (
-            <h3>
-              {article.title} {count}
-            </h3>
-          )}
-        </Link>
-        <p>{article.body.substr(0, type === 'large' ? 500 : 100)}</p>
-      </article>
-    </li>
-  );
+export default function({
+  key,
+  article,
+  type,
+  annotationsCount,
+  timesRead,
+  read,
+}) {
+  if (type === 'large') {
+    return (
+      <li key={key}>
+        <article>
+          <Link to={`articles/${article.slug}`}>
+            <h1>{article.title}</h1>
+          </Link>
+          <p>{article.body.substr(0, 500)}</p>
+        </article>
+      </li>
+    );
+  } else {
+    return (
+      <li key={key}>
+        <article>
+          <Link to={`articles/${article.slug}`}>
+            <h4>{article.title}</h4>
+          </Link>
+          <div>
+            <span>{timesRead}x gelezen</span>
+            <span>{read ? 'Gelezen' : 'Ongelezen'}</span>
+            <span>{annotationsCount} annotaties</span>
+          </div>
+          {/* <p>{article.body.substr(0, 100)}</p> */}
+        </article>
+      </li>
+    );
+  }
 }
