@@ -1,13 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const Logo = styled.svg`
-  width: 52px;
-  height: 20px;
-`;
 
 export default ({ color, width = 52, height = 20 }) => (
-  <Logo viewBox={`0 0 ${width} ${height}`}>
+  <svg viewBox={`0 0 ${width} ${height}`}>
     <g>
       <path
         fill="#003082"
@@ -16,5 +10,5 @@ export default ({ color, width = 52, height = 20 }) => (
     			c0.4,0,0.8,0.2,1.2,0.4l5.8,6c1,1,2.4,1.6,4,1.6h10.8l-4,4H29.4c-0.4,0-0.8-0.2-1.2-0.4L22.4,9.6z"
       />
     </g>
-  </Logo>
+  </svg>
 );
