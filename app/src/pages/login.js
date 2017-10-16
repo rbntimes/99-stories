@@ -55,6 +55,7 @@ class Register extends Component {
               />
             </Field>
             <input type="submit" value="Submit" />
+            <Link to="/register">Nog geen account? Maak deze hier aan</Link>
             <Link to="/">terug</Link>
           </fieldset>
         </form>

@@ -35,13 +35,35 @@ class Art extends Component {
   componentDidMount() {
     fire
       .database()
-      .ref(`comments/${this.state.article}`)
+      .ref(`articles/${this.state.article}/comments`)
       .on('value', snapshot => {
+        if (!snapshot.val()) {
+          fire
+            .database()
+            .ref(`articles/${this.state.article}/comments`)
+            .set(false);
+        }
         this.setState({
           comments: snapshot.val() || {},
           commentsLoaded: true,
         });
       });
+
+    fire
+      .database()
+      .ref(`articles/${this.state.article}/read`)
+      .once('value')
+      .then(snapshot => {
+        fire
+          .database()
+          .ref(`articles/${this.state.article}/read`)
+          .set(snapshot.val() + 1);
+      });
+
+    fire
+      .database()
+      .ref(`users/${this.props.user.uid}/articlesRead/${this.state.article}`)
+      .set(true);
   }
 
   handleClick(selected) {
@@ -112,6 +134,9 @@ class Art extends Component {
       commentsLoaded && showComments ? (
         <aside data-comments>
           <section>
+            <Link to="/">Terug</Link>
+          </section>
+          <section>
             <a onClick={this.showComments}>x</a>
             <Comment
               user={userIsLoggedIn ? user : false}
@@ -130,6 +155,9 @@ class Art extends Component {
         </aside>
       ) : (
         <aside>
+          <section>
+            <Link to="/">terug naar overzicht</Link>
+          </section>
           <section>
             <h2>Reacties / annotaties</h2>
             <p>Klik in het artikel om reacties of annotaties te laden!</p>
