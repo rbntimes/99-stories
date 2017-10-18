@@ -106,7 +106,7 @@ class Main extends Component {
                     })
                     .map((article, index) => {
                       if (index > 4) {
-                        return;
+                        return false;
                       }
                       return (
                         <li>
@@ -137,7 +137,7 @@ class Main extends Component {
                     })
                     .map((article, index) => {
                       if (index > 4) {
-                        return;
+                        return false;
                       }
                       return (
                         <li>

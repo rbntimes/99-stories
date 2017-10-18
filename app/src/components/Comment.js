@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import getOr from 'lodash/fp/getOr';
 import fire from './../fire';
 import './style.css';
 

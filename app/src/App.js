@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import { Switch, Route } from 'react-router-dom';
-import Setup from './pages/setup';
 
 import Main from './pages/main';
 import Register from './pages/register';
@@ -45,8 +44,8 @@ class App extends Component {
             .catch(function(error) {
               // console.log(error);
               // Handle Errors here.
-              var errorCode = error.code;
-              var errorMessage = error.message;
+              // var errorCode = error.code;
+              // var errorMessage = error.message;
               // ...
             });
         }

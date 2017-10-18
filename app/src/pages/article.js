@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import find from 'lodash/find';
 
-import { setSelection, setComment, selectComment } from './../actions';
-
 import Article from './../components/Article';
-import Select from './../components/Select';
 
 import { articles } from './../constants';
 import Comment from './../components/Comment';

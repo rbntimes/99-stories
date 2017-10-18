@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import NsLogo from './../components/NsLogo';
-import H3 from './../components/H3';
 import fire from './../fire';
 import './style.css';
 

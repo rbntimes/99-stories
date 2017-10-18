@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import fire from './../fire';
 import { Link } from 'react-router-dom';
 
-import P from './../components/P';
-import H3 from './../components/H3';
 import Field from './../components/Field';
 
 class Register extends Component {
@@ -27,8 +25,6 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state, this.props);
-    return;
     fire
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.pass1)
