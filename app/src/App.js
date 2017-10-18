@@ -28,11 +28,11 @@ class App extends Component {
         });
         if (user) {
           const userNode = fire.database().ref(`users/${user.uid}`);
-
-          userNode.set({
-            registered: false,
-          });
-
+          if (user.isAnonymous) {
+            userNode.set({
+              registered: false,
+            });
+          }
           userNode.on('value', snapshot => {
             this.setState({
               dataRetreived: true,
