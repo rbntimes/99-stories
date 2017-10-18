@@ -123,6 +123,11 @@ class Art extends Component {
     const article = find(articles, { slug: this.state.article });
 
     return [
+      <section>
+        <div>
+          <h1>{article.title}</h1>
+        </div>
+      </section>,
       <main showcomments={showComments ? 'true' : 'false'}>
         <Article
           key={article.slug}
@@ -133,8 +138,11 @@ class Art extends Component {
       </main>,
       commentsLoaded && showComments ? (
         <aside data-comments>
-          <section>
+          <section data-goback>
             <Link to="/">Terug</Link>
+          </section>
+          <section data-close>
+            <a onClick={this.showComments}>X</a>
           </section>
           <section>
             <a onClick={this.showComments}>x</a>
