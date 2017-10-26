@@ -28,7 +28,7 @@ class Comments extends Component {
         `articles/${this.props.article}/comments/${this.props.annotateSentence}`
       );
     const item = {
-      user: this.props.user.email,
+      user: this.props.user.displayName,
       comment: this.state.comment,
     };
     itemsRef.push(item);
@@ -42,20 +42,19 @@ class Comments extends Component {
     const { comment } = this.state;
 
     if (annotateSentence && user) {
-      return (
+      return [
+        <h3>Reageer zelf</h3>,
         <form onSubmit={this.handleSubmit}>
-          <input value={comment} onChange={this.handleInput} />
-          <button>annotate</button>
-        </form>
-      );
+          <textarea value={comment} onChange={this.handleInput} />
+          <input type="submit" value="Plaats" />
+        </form>,
+      ];
     } else {
-      return (
-        <section>
-          <span>Om hier op te reageren heb je een account nodig!</span>,
-          <Link to="/register">Maak deze eerst aan</Link>,
-          <Link to="/login">of log in als je deze al hebt</Link>,
-        </section>
-      );
+      return [
+        <span>Om hier op te reageren heb je een account nodig!</span>,
+        <Link to="/register">Maak deze eerst aan</Link>,
+        <Link to="/login">of log in als je deze al hebt</Link>,
+      ];
     }
   }
 }

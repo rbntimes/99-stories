@@ -13,51 +13,33 @@ import fire from './fire';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      userIsLoggedIn: false,
-    };
+    this.state = {};
   }
 
   componentDidMount() {
     fire.auth().onAuthStateChanged(
       function(user) {
         this.setState({
-          userIsLoggedIn: user && !user.isAnonymous ? true : false,
+          userIsLoggedIn: user ? true : false,
           user: user,
         });
         if (user) {
           const userNode = fire.database().ref(`users/${user.uid}`);
-          if (user.isAnonymous) {
-            userNode.set({
-              registered: false,
-            });
-          }
           userNode.on('value', snapshot => {
             this.setState({
               dataRetreived: true,
             });
           });
-        } else {
-          fire
-            .auth()
-            .signInAnonymously()
-            .catch(function(error) {
-              // console.log(error);
-              // Handle Errors here.
-              // var errorCode = error.code;
-              // var errorMessage = error.message;
-              // ...
-            });
         }
       }.bind(this)
     );
   }
 
   render() {
-    console.log(this.props, this.state);
+    console.log(this.state, this.props);
     return [
       <Header key="header" loggedIn={this.state.userIsLoggedIn} />,
-      this.state.dataRetreived ? (
+      this.state.userIsLoggedIn !== undefined ? (
         <Switch key="switch">
           <Route
             key="home"
@@ -73,14 +55,10 @@ class App extends Component {
           />
         </Switch>
       ) : (
-        <span key="loading">Je data wordt geladen, even geduld...</span>
+        <span>LADEN</span>
       ),
-      <Route
-        key="register"
-        path="/register"
-        exact
-        render={() => <Register {...this.state} />}
-      />,
+
+      <Route key="register" path="/register" exact component={Register} />,
       <Route key="login" path="/login" exact component={Login} />,
     ];
   }

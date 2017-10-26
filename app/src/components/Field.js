@@ -1,8 +1,9 @@
 import React from 'react';
 
-export default ({ label, children }) => (
+export default ({ label, children, errorMsg, valid }) => [
   <label>
     {label}
     {children}
-  </label>
-);
+  </label>,
+  <span>{valid === false ? errorMsg : ''}</span>,
+];

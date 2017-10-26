@@ -56,10 +56,12 @@ class Art extends Component {
           .set(snapshot.val() + 1);
       });
 
-    fire
-      .database()
-      .ref(`users/${this.props.user.uid}/articlesRead/${this.state.article}`)
-      .set(true);
+    if (this.props.user) {
+      fire
+        .database()
+        .ref(`users/${this.props.user.uid}/articlesRead/${this.state.article}`)
+        .set(true);
+    }
   }
 
   handleClick(selected) {
@@ -120,11 +122,12 @@ class Art extends Component {
 
     return [
       <section>
-        <div>
-          <h1>{article.title}</h1>
-        </div>
+        <h2>{article.title.slice(18, article.title.length).trim()}</h2>
       </section>,
-      <main showcomments={showComments ? 'true' : 'false'}>
+      <main
+        showComments={showComments ? 'true' : 'false'}
+        twocol={showComments ? 'true' : 'false'}
+      >
         <Article
           key={article.slug}
           title={article.title}
@@ -141,7 +144,6 @@ class Art extends Component {
             <a onClick={this.showComments}>X</a>
           </section>
           <section>
-            <a onClick={this.showComments}>x</a>
             <Comment
               user={userIsLoggedIn ? user : false}
               article={article.slug}

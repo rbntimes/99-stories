@@ -9,7 +9,6 @@ export default function({
   annotationsCount,
   timesRead,
   read,
-  display,
 }) {
   return (
     <li key={key}>
@@ -22,6 +21,7 @@ export default function({
           <span>{annotationsCount}x geannoteerd</span>
         </footer>
         <p>{article.body.substr(0, 500)}</p>
+        <Link to={`articles/${article.slug}`}>Lees meer</Link>
       </article>
     </li>
   );

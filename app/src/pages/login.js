@@ -14,7 +14,6 @@ class Register extends Component {
       pass1: '',
       pass2: '',
     };
-    console.log(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -34,38 +33,43 @@ class Register extends Component {
 
   render() {
     return [
-      <main>
-        <form onSubmit={this.handleSubmit}>
-          <fieldset>
-            <legend>Inloggen</legend>
-            <Field label="Email:">
-              <input
-                value={this.state.email}
-                onChange={e => this.handleChange('email', e.target.value)}
-                type="email"
-              />
-            </Field>
-            <Field label="Wachtwoord:">
-              <input
-                value={this.state.pass1}
-                onChange={e => this.handleChange('pass1', e.target.value)}
-                type="password"
-              />
-            </Field>
-            <input type="submit" value="Submit" />
-            <Link to="/register">Nog geen account? Maak deze hier aan</Link>
-            <Link to="/">terug</Link>
-          </fieldset>
-        </form>
+      <section>
+        <h2>Uw persoonlijke account!</h2>
+      </section>,
+      <main twocol="true">
+        <section>
+          <form onSubmit={this.handleSubmit}>
+            <fieldset>
+              <legend>Inloggen</legend>
+              <Field label="Email:">
+                <input
+                  value={this.state.email}
+                  onChange={e => this.handleChange('email', e.target.value)}
+                  type="email"
+                />
+              </Field>
+              <Field label="Wachtwoord:">
+                <input
+                  value={this.state.pass1}
+                  onChange={e => this.handleChange('pass1', e.target.value)}
+                  type="password"
+                />
+              </Field>
+              <input type="submit" value="Submit" />
+            </fieldset>
+            <span>
+              <Link to="/register">Nog geen account? Maak deze hier aan</Link>
+              <Link to="/">terug</Link>
+            </span>
+          </form>
+        </section>
       </main>,
       <aside>
         <section>
           <h2>Waarom zou ik registreren?</h2>
           <p>
             Donec id elit non mi porta gravida at eget metus. Nullam quis risus
-            eget urna mollis ornare vel eu leo. Nullam id dolor id nibh
-            ultricies vehicula ut id elit. Etiam porta sem malesuada magna
-            mollis euismod. Donec ullamcorper nulla non metus auctor fringilla.
+            eget urna mollis ornare vel eu leo. Nullam id dolor id nibh.
           </p>
         </section>
       </aside>,

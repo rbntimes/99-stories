@@ -6,13 +6,15 @@ import { Link } from 'react-router-dom';
 import { articles } from './../constants';
 import fire from './../fire';
 import shuffle from './../shuffle';
+
 class Main extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
+
     this.state = {
       shuffled: shuffle(articles.slice(0)),
       commentsLoaded: false,
+      userDataLoaded: false,
       sort: 'read',
       hideRead: false,
       display: 'row',
@@ -33,17 +35,20 @@ class Main extends Component {
         });
       });
 
-    fire
-      .database()
-      .ref(`users/${this.props.user.uid}`)
-      .once('value')
-      .then(snapshot => {
-        this.setState({
-          userRead: snapshot.val().articlesRead || [],
-          sort: snapshot.val().sortBy || 'read',
-          hideRead: snapshot.val().hideRead || false,
+    if (this.props.user) {
+      fire
+        .database()
+        .ref(`users/${this.props.user.uid}`)
+        .once('value')
+        .then(snapshot => {
+          this.setState({
+            userDataLoaded: true,
+            userRead: snapshot.val().articlesRead || [],
+            sort: snapshot.val().sortBy || 'read',
+            hideRead: snapshot.val().hideRead || false,
+          });
         });
-      });
+    }
   }
 
   onSelect(e) {
@@ -74,7 +79,6 @@ class Main extends Component {
       hideRead,
       sort,
       userRead,
-      display,
     } = this.state;
 
     const randomStory = articles[Math.floor(Math.random() * articles.length)];
@@ -82,12 +86,9 @@ class Main extends Component {
     return [
       <section>
         <div>
-          <h3>
-            <Link to={`/articles/${randomStory.slug}`}>
-              {randomStory.title}
-            </Link>
-          </h3>
-          <p>{randomStory.body.substr(0, 200)}</p>
+          <h3>{randomStory.title}</h3>
+          <p>{randomStory.body.substr(0, 100)}</p>
+          <Link to={`/articles/${randomStory.slug}`}>Lees meer</Link>
         </div>
       </section>,
       <main>
@@ -153,71 +154,98 @@ class Main extends Component {
         </section>
         <section>
           <h2>Artikelen </h2>
-          <div>
-            <label>
-              <input
-                checked={hideRead}
-                onChange={this.toggleRead}
-                type="checkbox"
-              />
-              Verberg gelezen
-            </label>
-            <label>
-              Filter op
-              <select onChange={this.onSelect}>
-                <option disabled>Sorteer op</option>
-                <option selected={sort === 'read'} value="read">
-                  Aantal x gelezen
-                </option>
-                <option selected={sort === 'annotations'} value="annotations">
-                  Aantal annotaties
-                </option>
-                <option selected={sort === 'ascending'} value="ascending">
-                  1 - 99
-                </option>
-                <option selected={sort === 'descending'} value="descending">
-                  99 - 1
-                </option>
-              </select>
-            </label>
-          </div>
-          <ul>
-            {shuffled &&
-              shuffled
-                .filter(article => {
-                  if (hideRead) {
-                    return !getOr(false, [article.slug], userRead);
-                  }
-                  return article;
-                })
-                .sort((a, b) => {
-                  if (sort === 'read') {
+          {this.props.user && (
+            <div>
+              <label>
+                <input
+                  checked={hideRead}
+                  onChange={this.toggleRead}
+                  type="checkbox"
+                />
+                Verberg gelezen
+              </label>
+              <label>
+                Filter op
+                <select value={sort} onChange={this.onSelect}>
+                  <option disabled>Sorteer op</option>
+                  <option value="read">Aantal x gelezen</option>
+                  <option value="annotations">Aantal annotaties</option>
+                  <option value="ascending">1 - 99</option>
+                  <option value="descending">99 - 1</option>
+                </select>
+              </label>
+            </div>
+          )}
+          {console.log(this.props, this.state)}
+          {this.props.user ? (
+            <ul>
+              {this.props.userIsLoggedIn &&
+              (Object.keys(getOr([], 'userRead', this.state)).length !==
+                articles.length ||
+                !this.state.hideRead) &&
+              shuffled ? (
+                shuffled
+                  .filter(article => {
+                    if (hideRead) {
+                      return !getOr(false, [article.slug], userRead);
+                    }
+                    return article;
+                  })
+                  .sort((a, b) => {
+                    if (sort === 'read') {
+                      return (
+                        getOr(0, [b.slug], articleData).read -
+                        getOr(0, [a.slug], articleData).read
+                      );
+                    } else if (sort === 'annotations') {
+                      return (
+                        Object.keys(
+                          getOr({ comments: [] }, [b.slug], articleData)
+                            .comments
+                        ).length -
+                        Object.keys(
+                          getOr({ comments: [] }, [a.slug], articleData)
+                            .comments
+                        ).length
+                      );
+                    } else if (sort === 'ascending') {
+                      return (
+                        Math.round(a.slug.split('-')[1]) -
+                        Math.round(b.slug.split('-')[1])
+                      );
+                    } else {
+                      return (
+                        Math.round(b.slug.split('-')[1]) -
+                        Math.round(a.slug.split('-')[1])
+                      );
+                    }
+                  })
+                  .map(article => {
                     return (
-                      getOr(0, [b.slug], articleData).read -
-                      getOr(0, [a.slug], articleData).read
+                      <ListItem
+                        annotationsCount={
+                          Object.keys(
+                            getOr({ comments: [] }, [article.slug], articleData)
+                              .comments
+                          ).length
+                        }
+                        timesRead={
+                          getOr({ read: 0 }, [article.slug], articleData).read
+                        }
+                        type="large"
+                        key={`main-${article.slug}`}
+                        article={article}
+                      />
                     );
-                  } else if (sort === 'annotations') {
-                    return (
-                      Object.keys(
-                        getOr({ comments: [] }, [b.slug], articleData).comments
-                      ).length -
-                      Object.keys(
-                        getOr({ comments: [] }, [a.slug], articleData).comments
-                      ).length
-                    );
-                  } else if (sort === 'ascending') {
-                    return (
-                      Math.round(a.slug.split('-')[1]) -
-                      Math.round(b.slug.split('-')[1])
-                    );
-                  } else {
-                    return (
-                      Math.round(b.slug.split('-')[1]) -
-                      Math.round(a.slug.split('-')[1])
-                    );
-                  }
-                })
-                .map(article => (
+                  })
+              ) : (
+                <span>JE HEBT ALLES GELEZEN.. SICK</span>
+              )}
+            </ul>
+          ) : (
+            <ul>
+              {shuffled.map(article => {
+                return (
                   <ListItem
                     annotationsCount={
                       Object.keys(
@@ -228,84 +256,16 @@ class Main extends Component {
                     timesRead={
                       getOr({ read: 0 }, [article.slug], articleData).read
                     }
-                    display={display}
                     type="large"
                     key={`main-${article.slug}`}
                     article={article}
                   />
-                ))}
-          </ul>
+                );
+              })}
+            </ul>
+          )}
         </section>
       </main>,
-      // <aside>
-      //   <section>
-      // <select onChange={this.onSelect}>
-      //   <option disabled>Sorteer op</option>
-      //   <option selected={sort === 'read'} value="read">
-      //     Aantal x gelezen
-      //   </option>
-      //   <option selected={sort === 'annotations'} value="annotations">
-      //     Aantal annotaties
-      //   </option>
-      //   <option selected={sort === 'ascending'} value="ascending">
-      //     1 - 99
-      //   </option>
-      //   <option selected={sort === 'descending'} value="descending">
-      //     99 - 1
-      //   </option>
-      // </select>
-      //   </section>
-      //   <section>
-      //     <ul>
-      //       {articlesLoaded &&
-      //         articles
-      // .sort((a, b) => {
-      //   if (sort === 'read') {
-      //     return (
-      //       getOr(0, [b.slug], articleData).read -
-      //       getOr(0, [a.slug], articleData).read
-      //     );
-      //   } else if (sort === 'annotations') {
-      //     return (
-      //       Object.keys(
-      //         getOr({ comments: [] }, [b.slug], articleData).comments
-      //       ).length -
-      //       Object.keys(
-      //         getOr({ comments: [] }, [a.slug], articleData).comments
-      //       ).length
-      //     );
-      //   } else if (sort === 'ascending') {
-      //     return (
-      //       Math.round(a.slug.split('-')[1]) -
-      //       Math.round(b.slug.split('-')[1])
-      //     );
-      //   } else {
-      //     return (
-      //       Math.round(b.slug.split('-')[1]) -
-      //       Math.round(a.slug.split('-')[1])
-      //     );
-      //   }
-      // })
-      //           .map(article => (
-      //             <ListItem
-      // annotationsCount={
-      //   Object.keys(
-      //     getOr({ comments: [] }, [article.slug], articleData)
-      //       .comments
-      //   ).length
-      // }
-      // timesRead={
-      //   getOr({ read: 0 }, [article.slug], articleData).read
-      // }
-      //               read={getOr(false, [article.slug], userRead)}
-      //               type="small"
-      //               key={`aside-${article.slug}`}
-      //               article={article}
-      //             />
-      //           ))}
-      //     </ul>
-      //   </section>
-      // </aside>,
     ];
   }
 }

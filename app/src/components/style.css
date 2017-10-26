@@ -1,16 +1,16 @@
 #root {
-  /*height: 100vh;*/
+  min-height: 100vh;
   background-color: #e6e6e9;
   display: grid;
   grid-row-gap: 2px;
-  grid-template-columns: 1fr 7fr 3fr 1fr;
-  grid-template-rows: 3em 30em 1fr;
+  grid-template-columns: 1fr 4fr 3fr 3fr 1fr;
+  grid-template-rows: 3em 20em 1fr 2em;
   font-family: 'Open Sans', sans-serif;
 }
 
 /* header */
 header {
-  grid-column: 1 / 5;
+  grid-column: 1 / 6;
   grid-row: 1 / 2;
   display: grid;
   background-color: white;
@@ -20,7 +20,7 @@ header {
 }
 
 header > nav {
-  grid-column: 2 / 4;
+  grid-column: 2 / 5;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -40,7 +40,7 @@ header > nav > a > svg {
 
 /* main */
 main {
-  grid-column: 2 / 4;
+  grid-column: 2 / 5;
   grid-row: 3 / 4;
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -48,12 +48,11 @@ main {
 }
 
 #root > section {
-  background-image: url('./../assets/detal-druktemelder.jpg');
+  background-image: url('./../assets/15857065009_13e10e0e8d_b.png');
   background-size: cover;
-  grid-column: 1 / 5;
+  grid-column: 1 / 6;
   grid-row: 2 / 3;
-  background-position: center left;
-  height: 30em;
+  background-position: 0% 10%;
   display: grid;
   align-items: center;
   grid-template-columns: inherit;
@@ -66,8 +65,18 @@ main {
   color: white;
 }
 
-#root > section > div > h2,
-h3 > a {
+#root > section > div > h3 {
+  grid-column: 2 / 3;
+  color: white;
+}
+
+#root > section > h2 {
+  grid-column: 2 / 3;
+  color: white;
+  font-weight: 500;
+}
+
+#root > section > div > a {
   color: white;
 }
 
@@ -122,6 +131,7 @@ main > section {
 
 main > section:last-of-type {
   grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+  /*grid-template-columns: 20em 20em 21em;*/
   display: grid;
 }
 
@@ -145,6 +155,15 @@ main > section:last-of-type > div > label:last-of-type {
 
 main > section:last-of-type > div > label > select {
   margin-left: 0.5em;
+  border-radius: 0;
+  background: white;
+  background-repeat: no-repeat;
+  -webkit-appearance: none;
+  border: 1px solid lightgrey;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11.dtd%22%3E%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20%20width%3D%2235px%22%20height%3D%2235px%22%20viewBox%3D%220%200%2035%2035%22%20enable-background%3D%22new%200%200%2035%2035%22%20xml%3Aspace%3D%22preserve%22%3E%3Cg%3E%20%3Cg%3E%20%20%3Cpolygon%20points%3D%2217.5%2C20.3%2012%2C14.8%2012%2C16.2%2017.5%2C21.7%2023%2C16.2%2023%2C14.8%20%20%20%22%2F%3E%20%3C%2Fg%3E%3C%2Fg%3E%3Cstyle%20type%3D%22text%2Fcss%22%3Ecircle%2C%20ellipse%2C%20line%2C%20path%2C%20polygon%2C%20polyline%2C%20rect%2C%20text%20%7B%20fill%3A%20%23003082%3B%20%7D%3C%2Fstyle%3E%3C%2Fsvg%3E');
+  padding: 1em 3em 1em 1em;
+  color: #003082;
+  background-position: 100%;
 }
 
 main > section:last-of-type > ul {
@@ -156,6 +175,7 @@ main > section:last-of-type > ul {
 }
 
 main > section:last-of-type > ul > li {
+  max-width: 40em;
   background: white;
   overflow: hidden;
   box-shadow: 0 0.125rem 0 0 rgba(7, 7, 33, 0.15);
@@ -165,11 +185,6 @@ main > section:last-of-type > ul > li {
 main > section:last-of-type > ul > li footer {
   display: flex;
   justify-content: space-between;
-}
-
-main > form {
-  grid-column: 3 / 4;
-  grid-row: 3 / 4;
 }
 
 main > ul {
@@ -197,7 +212,7 @@ aside {
   border-left: 1px solid #003082;
   display: grid;
   grid-row: 3 / 4;
-  grid-column: 3 / 4;
+  grid-column: 4 / 5;
   grid-template-rows: 3em 2em auto;
   grid-template-columns: 1em auto 1em;
 }
@@ -206,7 +221,7 @@ aside[data-comments] {
   display: grid;
 }
 
-main[showcomments] > section {
+main[twocol] > section {
   grid-column: 1 / 2;
   background-color: white;
   padding: 2em;
@@ -214,7 +229,7 @@ main[showcomments] > section {
 
 aside > section:first-of-type {
   display: grid;
-  align-items: center;
+  align-items: flex-end;
   grid-row: 1 / 2;
   grid-column: 2 / 3;
 }
@@ -223,10 +238,8 @@ aside > section:last-of-type {
   grid-row: 3 / 4;
   grid-column: 2 / 3;
   align-items: flex-start;
-}
-
-aside > section:last-of-type > a {
-  display: none;
+  display: flex;
+  flex-direction: column;
 }
 
 aside > section[data-close] {
@@ -239,16 +252,28 @@ aside > section[data-goback] {
 
 aside > section > ul {
   display: flex;
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
   margin: 0;
   padding: 0;
 }
 
 aside > section > ul > li {
   list-style: none;
+  border-bottom: 0.0625rem solid #e6e6e9;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+}
+
+aside > section > ul > li > a {
+  font-size: 0.8125em;
+}
+
+aside > section form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 aside > section > ul > li > article > div {
@@ -260,14 +285,9 @@ aside > section > ul > li:first-of-type > article > a > h3 {
   margin-top: 0.3em;
 }
 
-aside > section > ul > li span {
+aside > section > ul > li > ul > li {
   font-size: 0.8125em;
-}
-
-aside > section > form {
-  display: grid;
-  grid-template-columns: 1em auto 1em;
-  grid-template-rows: auto 2em;
+  margin-left: 1em;
 }
 
 aside > section > form > * {
@@ -276,21 +296,23 @@ aside > section > form > * {
 
 aside > form {
   grid-column: 2/3;
+  display: flex;
 }
 
 /* /aside */
 
 /* form */
 
-main > form {
+main > section > form {
   background-color: white;
-  display: grid;
+  display: flex;
+  padding: 1em;
   background-color: #ffc917;
-  grid-template-rows: 1em auto 1em;
-  grid-template-columns: 1em auto 1em;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-main > form > fieldset {
+main > section > form > fieldset {
   border: 0;
   margin: 0;
   padding: 0;
@@ -298,15 +320,26 @@ main > form > fieldset {
   grid-row: 2 / 3;
 }
 
-main > form > fieldset > * {
+main > section > form > fieldset > * {
   grid-column: 2 / 3;
+  display: flex;
+  flex-direction: column;
 }
 
-main > form > fieldset > legend {
+main > section > form > fieldset > span {
+  color: red;
+}
+
+main > section > form > span {
+  display: flex;
+  justify-content: space-between;
+}
+
+main > section > form > fieldset > legend {
   font-size: 2em;
 }
 
-main > form > fieldset input {
+main > section > form > fieldset input {
   font-size: 1em;
   width: 100%;
   height: 2.8125em;
@@ -316,6 +349,39 @@ main > form > fieldset input {
   margin: 0;
   box-sizing: border-box;
   border: 0;
+}
+
+input[type='submit'] {
+  background-color: #0079d3;
+  border: 0;
+  color: #fff;
+  /*box-shadow: inset 0 -0.125rem 0 #005ca0;*/
+  margin-top: 10px;
+  padding: 0.625rem 1.125rem;
+  transition: box-shadow 0.15s;
+}
+input[type='submit']:hover {
+  color: #fff;
+  background-color: #005ca0;
+  box-shadow: inset 0 3.125rem 0 #005ca0;
+}
+
+input[disabled] {
+  background-color: grey;
+}
+
+input[disabled]:hover {
+  background-color: grey;
+  box-shadow: inset 0 3.125rem 0 grey;
+}
+
+section > form > span > a {
+  border-bottom: 2px solid rgba(7, 7, 33, 0.1);
+  padding-bottom: 9px;
+}
+
+section > form > span > a:hover {
+  border-bottom: 2px solid #0079d3;
 }
 
 aside textarea {
@@ -376,7 +442,7 @@ main > section > article > p {
 }
 
 mark {
-  background-color: #f5f5f5;
+  background-color: white;
   padding: 0.2em 0;
   cursor: pointer;
 }
@@ -407,16 +473,22 @@ mark:hover {
 
 @media (max-width: 40em) {
   #root {
+    min-height: 0px;
     display: grid;
-    grid-template-rows: 3em 20em 1fr;
+    grid-template-rows: 3em 15em 1fr;
     grid-template-columns: 0.4375rem 2em auto 2em 0.4375rem;
   }
 
   #root > section {
-    height: 20em;
+    height: 15em;
+    padding: 0;
   }
 
   #root > section > div {
+    grid-column: 2 / 4;
+  }
+
+  #root > section > h2 {
     grid-column: 2 / 4;
   }
 
@@ -430,7 +502,7 @@ mark:hover {
   }
 
   main {
-    grid-column: 2 / 4;
+    grid-column: 2 / 5;
     grid-template-columns: 1fr;
   }
 
@@ -445,14 +517,6 @@ mark:hover {
   main[showcomments='true'] > section {
     grid-column: 1 / 3;
   }
-
-  /*main > section {
-    background-color: white;
-    grid-template-columns: 1em auto 1em;
-    grid-template-rows: 1em auto 1em;
-    display: grid;
-    grid-column: 2/3;
-  }*/
 
   main > section > article {
     grid-column: 2 / 3;
@@ -530,9 +594,9 @@ mark:hover {
   }
 }
 
-@media (max-width: 64em) {
+@media (max-width: 64em) and (min-width: 40em) {
   #root {
-    grid-template-columns: 0.4375em 7fr 3fr 0.4375em;
+    grid-template-columns: 0.4375em 4fr 3fr 3fr 0.4375em;
   }
 
   main > section {
@@ -540,10 +604,14 @@ mark:hover {
   }
 
   header {
-    grid-column: 1 / 5;
+    grid-column: 1 / 6;
   }
 
   header > nav {
-    grid-column: 2 / 4;
+    grid-column: 2 / 5;
+  }
+
+  aside {
+    grid-column: 4 / 5;
   }
 }
