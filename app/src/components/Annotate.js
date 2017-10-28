@@ -43,7 +43,7 @@ class Comments extends Component {
 
     if (annotateSentence && user) {
       return [
-        <h3>Reageer zelf</h3>,
+        <h3>Reageer</h3>,
         <form onSubmit={this.handleSubmit}>
           <textarea value={comment} onChange={this.handleInput} />
           <input type="submit" value="Plaats" />

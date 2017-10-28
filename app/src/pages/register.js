@@ -146,10 +146,17 @@ class Register extends Component {
       </main>,
       <aside>
         <section>
-          <h2>Waarom zou ik inloggen?</h2>
+          <h3>Waarom zou ik registreren?</h3>
           <p>
-            Donec id elit non mi porta gravida at eget metus. Nullam quis risus
-            eget urna mollis ornare vel eu leo. Nullam id dolor id nibh
+            Door te registreren kunt u reageren op mijn stijloefeningen of op
+            andere gebruikers op de site! Ook houdt ik bij wat je al gelezen
+            hebt, zo lees je nooit iets dubbel
+          </p>
+          <p>
+            Reageren kan op alles. Zie jij een spelfout, ben jij het niet met
+            mij eens of slaat de reactie van een van de andere reageerders
+            nergens op? Laat het me weten, ik lees graag wat jullie hebben te
+            schrijven.
           </p>
         </section>
       </aside>,
