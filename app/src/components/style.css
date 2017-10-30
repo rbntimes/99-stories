@@ -33,7 +33,7 @@ header > nav > a {
 
 header > nav > a > svg {
   width: 52px;
-  height: 20px;
+  height: 25px;
 }
 
 /* /header */
@@ -131,7 +131,7 @@ main > section {
 
 main > section:last-of-type {
   grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
-  /*grid-template-columns: 20em 20em 21em;*/
+  /*grid-template-columns: 24em 24em;*/
   display: grid;
 }
 
@@ -141,10 +141,13 @@ main > section:last-of-type > h2 {
 
 main > section:last-of-type > div {
   margin: 0 0 1em 0;
-  display: grid;
+  display: flex;
   align-items: center;
-  grid-column: 2 / 3;
-  grid-auto-flow: column;
+  justify-content: space-between;
+}
+
+main > section:last-of-type > div > span: {
+  flex-shrink: 0;
 }
 
 main > section:last-of-type > div > label:last-of-type {
@@ -185,6 +188,40 @@ main > section:last-of-type > ul > li {
 main > section:last-of-type > ul > li footer {
   display: flex;
   justify-content: space-between;
+}
+
+main > section:last-of-type > ul > li > article > footer span {
+  transition: font-size 0.1s;
+}
+
+main
+  > section:last-of-type
+  > ul
+  > li
+  > article
+  > footer
+  span[data-being-read='true']::before {
+  content: '\1F913 ';
+}
+
+main
+  > section:last-of-type
+  > ul
+  > li
+  > article
+  > footer
+  span[data-being-annotated='true']::after {
+  content: ' \270D';
+}
+
+main > section:last-of-type > ul > li[data-visible='true'] {
+  opacity: 1;
+  transition: opacity 1s;
+}
+
+main > section:last-of-type > ul > li[data-visible='false'] {
+  opacity: 0;
+  transition: opacity 1s;
 }
 
 main > ul {
@@ -421,7 +458,7 @@ a:visited > h3 {
 h1,
 h2,
 h3 {
-  margin-top: 0;
+  margin: 0;
 }
 
 h2 {

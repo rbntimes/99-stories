@@ -24,6 +24,11 @@ class Comments extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const { comment, selected, user } = this.props;
+
+    const notificationRef = fire
+      .database()
+      .ref(`users/${user.uid}/notifications`);
     const itemsRef = fire
       .database()
       .ref(
@@ -31,10 +36,18 @@ class Comments extends Component {
           .state.selectedComment}/comments`
       );
     const item = {
-      user: this.props.user.displayName,
+      user: user.displayName,
       comment: this.state[this.state.selectedComment],
     };
+
+    const reply = {
+      comment: this.state[this.state.selectedComment],
+      commentedOn: selected[this.state.selectedComment].comment,
+      commentBy: this.props.user.displayName || 'Anoniem',
+      commentRead: false,
+    };
     itemsRef.push(item);
+    notificationRef.push(reply);
     this.setState({
       [this.state.selectedComment]: '',
     });
@@ -54,7 +67,7 @@ class Comments extends Component {
     return [
       <h3>Molovich schreef: </h3>,
       <blockquote>"{comment}"</blockquote>,
-      <h3>Reacties</h3>,
+      selected ? <h3>Reacties</h3> : '',
       <ul>
         {selected &&
           Object.keys(selected).map(comment => {
